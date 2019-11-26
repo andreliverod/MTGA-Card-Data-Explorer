@@ -13,11 +13,11 @@ Here is a quick video preview of how it looks: https://youtu.be/aIo06p5G1WQ
 
     var cards =
   
-  Then add a ; at the end of the file
+  Then add a ; at the end of the file right after the "]" character;
 - In data_loc.js add the following to the start of the file in front of the "[" character:
 
     var loc =
   
-  Then add a ; at the end of the file
+  Then add a ; at the end of the file right after the "]" character;
 
 You can now open the Index file and search through the MTG Arena card database
