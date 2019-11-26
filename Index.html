@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    </head>
+    <body>
+        <p>
+            <input type="text" id="cardname" placeholder="CardName"><button onclick="cardSearch('name');">Cardname Search</button>
+        </p>
+        <p>
+            <input type="number" id="grpid" placeholder="ArenaId"><button onclick="cardSearch('grpid');">ArenaId Search</button>
+        </p>
+        <p>
+            <input type="text" id="setname" placeholder="Setname"><button onclick="cardSearch('setname');">Setname Search</button>
+        </p>
+        <div id="output"></div>
+        <script src="data_cards.js"></script> <!-- Wrap the array content of this file in a variable named "cards" -->
+        <script src="data_loc.js"></script> <!-- Wrap the array content of this file in a variable named "loc" -->
+        <script>
+            let language = loc[0].keys; //0=EN, 1=FR, 2=IT, 3=DE, 4=ES, 5=JP, 6=BR, 7=RU, 8=KR
+
+            function writeOutput(card, cardinfo){
+                var text ='<table border="1"><tr><th>Name</th><th>Set</th><th>Artist</th><th>Number</th><th>Collectible</th><th>Craftable</th><th>ArenaId</th></tr>';
+            
+                cardinfo.forEach(function(c){
+                    text += `<tr><td>${card != null ? card.text : c.cardName}</td><td>${c.set}</td><td>${c.artistCredit}</td><td>${c.CollectorNumber}</td><td>${c.isCollectible}</td><td>${c.isCraftable}</td><td>${c.grpid}</td></tr>`;
+                });
+                text += `</table><h1>RAW DATA</h1><h3>Localization:</h3><pre>${JSON.stringify(card, undefined, 2)}</pre><h3>Card:</h3><pre>${JSON.stringify(cardinfo, undefined, 2)}</pre>`;
+                return(text);
+            }
+            function cardSearch(option){
+                var output = '';
+                if(option === 'name'){
+                    let search = document.getElementById("cardname").value.toLowerCase();
+                    let card = language.find(o => o.text.toLowerCase() === search);
+                    if(card != null){
+                        let cardinfo = cards.filter(o => o.titleId === card.id);
+                        if(cardinfo != cardinfo.length > 0){
+                            output += writeOutput(card, cardinfo);
+                        }
+                    } else {
+                        output += '<h3>Not found</h3>';
+                    }
+                }
+                else if (option === 'grpid'){
+                    let search = document.getElementById("grpid").value;
+                    let cardinfo = cards.find(o => o.grpid == search);
+                    if(cardinfo != null){
+                        let card = language.find(o => o.id === cardinfo.titleId);
+                        if(cardinfo != null){
+                            output += writeOutput(card, cardinfo);
+                        }
+                    } else {
+                        output += '<h3>Not found</h3>';
+                    }
+                }
+                else if (option === 'setname'){
+                    let search = document.getElementById("setname").value.toLowerCase();
+                    let cardinfo = cards.filter(o => o.set.toLowerCase() == search);
+                    if(cardinfo != null && cardinfo.length > 0){
+                        var setinfo = [];
+                        cardinfo.forEach(function(c){
+                            var name = language.find(o => o.id === c.titleId);
+                            c.cardName = name.text;
+                        });
+                        output += writeOutput(null, cardinfo);
+                    }
+                } else {
+                    output += '<h3>Not found</h3>';
+                }
+                document.getElementById('output').innerHTML = output;
+            }
+
+            document.getElementById('cardname').onkeypress = function(e){
+                if (!e) e = window.event;
+                var keyCode = e.keyCode || e.which;
+                if (keyCode == '13'){
+                    cardSearch("name");
+                }
+            }
+            document.getElementById('grpid').onkeypress = function(e){
+                if (!e) e = window.event;
+                var keyCode = e.keyCode || e.which;
+                if (keyCode == '13'){
+                    cardSearch("grpid");
+                }
+            }
+            document.getElementById('setname').onkeypress = function(e){
+                if (!e) e = window.event;
+                var keyCode = e.keyCode || e.which;
+                if (keyCode == '13'){
+                    cardSearch("setname");
+                }
+            }
+        </script>
+    </body>
+</html>
