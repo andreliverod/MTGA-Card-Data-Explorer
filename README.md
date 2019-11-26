@@ -1,5 +1,6 @@
 # MTGA-Card-Data-Explorer
 A simple way to extract card data from Magic The Gathering Arena using only HTML and Javascript to read the included MTG Arena data files.
+Here is a quick video preview of how it looks: https://youtu.be/aIo06p5G1WQ
 
 # How to configure
 
