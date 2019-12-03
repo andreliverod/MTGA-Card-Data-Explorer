@@ -21,11 +21,15 @@
 
             function writeOutput(card, cardinfo){
                 var text ='<table border="1"><tr><th>Name</th><th>Set</th><th>Artist</th><th>Number</th><th>Collectible</th><th>Craftable</th><th>ArenaId</th></tr>';
-            
-                cardinfo.forEach(function(c){
+                if (Array.isArray(cardinfo)){
+                    cardinfo.forEach(function(c){
                     text += `<tr><td>${card != null ? card.text : c.cardName}</td><td>${c.set}</td><td>${c.artistCredit}</td><td>${c.CollectorNumber}</td><td>${c.isCollectible}</td><td>${c.isCraftable}</td><td>${c.grpid}</td></tr>`;
                 });
-                text += `</table><h1>RAW DATA</h1><h3>Localization:</h3><pre>${JSON.stringify(card, undefined, 2)}</pre><h3>Card:</h3><pre>${JSON.stringify(cardinfo, undefined, 2)}</pre>`;
+                } else {
+                    text += `<tr><td>${card != null ? card.text : cardinfo.cardName}</td><td>${cardinfo.set}</td><td>${cardinfo.artistCredit}</td><td>${cardinfo.CollectorNumber}</td><td>${cardinfo.isCollectible}</td><td>${cardinfo.isCraftable}</td><td>${cardinfo.grpid}</td></tr>`;
+                }
+                text += '</table>';
+                // text += `</table><h1>RAW DATA</h1><h3>Localization:</h3><pre>${JSON.stringify(card, undefined, 2)}</pre><h3>Card:</h3><pre>${JSON.stringify(cardinfo, undefined, 2)}</pre>`;
                 return(text);
             }
             function cardSearch(option){
