@@ -4,7 +4,7 @@ Here is a quick video preview of how it looks: https://youtu.be/aIo06p5G1WQ
 
 # How to configure
 
-1. Delete the two example files provided with the project: data_cards.js and data_loc.js
+1. Delete the two example files provided with the project: data_cards.js and data_loc.js. (These where extracted from MTGA November 2019, use them to check out how it works before replacing them with new files from MTGA)
 2. Copy the data_cards_xxxxx.mtga and data_loc_xxxxx.mtga files from "\MTGA_Data\Downloads\Data" to the same folder as the Index.html file. These two files each contain an array of data.
 3. Rename the two files to data_cards.js and data_loc.js
 4. Edit the two files with an editor that can open large files and put the array in each file into a variable by doing the following:
